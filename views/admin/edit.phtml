@@ -1,0 +1,46 @@
+<?php
+/**
+ * One file of the theme in the code editor - see `ThemeEditorController::edit()`
+ *
+ * Expects: $title, $path (relative to the theme), $form, $in_git (whether the theme is in a
+ * clone), $state (this file's `RepositoryStatus` state, or ''), $back_url.
+ */
+use Dynart\Dpress\Repository\RepositoryStatus;
+?>
+<?php $this->useLayout($admin_layout) ?>
+<?php $this->startBlock('content') ?>
+    <div class="page-head">
+        <h1><?= esc_html($title) ?></h1>
+        <span class="spacer"></span>
+        <a class="button with-icon" href="<?= esc_attr($back_url) ?>" data-back><?= \Dynart\Dpress\Dpress::icon('back') ?> Back</a>
+    </div>
+
+    <?php if (!$in_git): ?>
+        <div class="warning">
+            <strong>The theme is not in a git clone</strong>, so saving has no history - keep a copy of
+            anything you would want back.
+        </div>
+    <?php elseif ($state === RepositoryStatus::UNCOMMITTED): ?>
+        <div class="warning">
+            <strong>This file is changed here and not committed.</strong> Commit and push it from the
+            server's clone: until then the change exists only on this server, and the next pull can
+            refuse to run while it is in the way.
+        </div>
+    <?php elseif ($state === RepositoryStatus::UNPUSHED): ?>
+        <div class="warning">
+            <strong>This file is committed here and not pushed.</strong> Push it from the server's clone -
+            until then the change exists only on this server.
+        </div>
+    <?php endif ?>
+
+    <div class="panel">
+        <p class="form-description"><code><?= esc_html($path) ?></code></p>
+        <form method="post">
+            <?= $form->fetch() ?>
+            <div class="form-actions">
+                <a class="button" href="<?= esc_attr($back_url) ?>">Cancel</a>
+                <button type="submit" class="primary with-icon"><?= \Dynart\Dpress\Dpress::icon('save') ?> Save</button>
+            </div>
+        </form>
+    </div>
+<?php $this->endBlock() ?>

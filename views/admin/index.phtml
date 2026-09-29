@@ -1,0 +1,64 @@
+<?php
+/**
+ * The Theme files screen - see `ThemeEditorController::index()`
+ *
+ * Expects: $theme (the active theme's name, '' for none), $folder, $clone (the git clone it is in,
+ * or ''), $rows ([path, language, size, state, edit_url]), $changes (path => state).
+ */
+use Dynart\Dpress\Repository\RepositoryStatus;
+?>
+<?php $this->useLayout($admin_layout) ?>
+<?php $this->startBlock('content') ?>
+    <div class="page-head">
+        <h1>Theme files</h1>
+    </div>
+
+    <?php if ($theme === ''): ?>
+        <div class="panel">
+            <p>No theme is active, so the site renders with Dpress's built-in templates - and those are
+                not the site's to edit. Choose a theme on Settings &gt; Theme.</p>
+        </div>
+    <?php else: ?>
+        <?php if ($clone === ''): ?>
+            <div class="warning">
+                <strong>This theme is not in a git clone</strong>, so a save here has no history: nothing
+                can undo it but the copy you keep yourself.
+            </div>
+        <?php elseif (!empty($changes)): ?>
+            <div class="warning">
+                <strong><?= count($changes) ?> file(s) of the theme differ from the remote</strong> - commit
+                and push them from the server's clone of the repository (<code><?= esc_html($clone) ?></code>),
+                or they exist only on this server.
+            </div>
+        <?php endif ?>
+
+        <div class="panel">
+            <p class="form-description">The <strong><?= esc_html($theme) ?></strong> theme, in
+                <code><?= esc_html($folder) ?></code>. A template is checked by PHP before it is saved,
+                so one that would not run is not written.</p>
+            <?php if ($rows === []): ?>
+                <p>It has no file this editor opens.</p>
+            <?php else: ?>
+                <table class="plain theme-editor-files">
+                    <thead><tr><th>File</th><th>Kind</th><th class="size">Size</th><th></th></tr></thead>
+                    <tbody>
+                    <?php foreach ($rows as $row): ?>
+                        <tr>
+                            <td><a href="<?= esc_attr($row['edit_url']) ?>"><code><?= esc_html($row['path']) ?></code></a></td>
+                            <td><?= esc_html($row['language'] === 'text' ? 'text' : strtoupper($row['language'] === 'markdown' ? 'md' : $row['language'])) ?></td>
+                            <td class="size"><?= number_format($row['size'] / 1024, 1) ?> KB</td>
+                            <td>
+                                <?php if ($row['state'] === RepositoryStatus::UNCOMMITTED): ?>
+                                    <span class="badge badge-draft">not committed</span>
+                                <?php elseif ($row['state'] === RepositoryStatus::UNPUSHED): ?>
+                                    <span class="badge badge-draft">not pushed</span>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            <?php endif ?>
+        </div>
+    <?php endif ?>
+<?php $this->endBlock() ?>

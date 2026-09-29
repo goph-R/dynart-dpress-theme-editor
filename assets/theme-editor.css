@@ -1,0 +1,8 @@
+/* The Theme files screen and its editor - the rest is the admin's own */
+
+/* A template is long: the editor starts most of the window tall, where a post's CSS box is six rows.
+   A drag of the handle still resizes it, and Full size is on its bar. */
+textarea.theme-editor-code { height: 70vh; min-height: 320px; }
+
+.theme-editor-files code { font-size: 13px; }
+.theme-editor-files .size { text-align: right; white-space: nowrap; color: var(--muted); }
