@@ -59,7 +59,7 @@ final class ThemeFilesTest extends TestCase {
 
     public function testTheSourceFilesAreListedWithTheirLanguage(): void {
         $this->assertSame(
-            ['assets/style.css' => 'css', 'dpress/content/list.phtml' => 'html', 'theme.ini' => 'text'],
+            ['assets/style.css' => 'css', 'dpress/content/list.phtml' => 'html', 'theme.ini' => 'ini'],
             array_map(fn(array $file) => $file['language'], $this->files()->list())
         );
     }

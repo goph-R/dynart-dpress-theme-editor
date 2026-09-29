@@ -29,9 +29,11 @@ class ThemeFiles {
         'html'  => 'html',
         'css'   => 'css',
         'md'    => 'markdown',
-        'js'    => 'text',
-        'json'  => 'text',
-        'ini'   => 'text',
+        // EnlighterJS's languages, coloured by its own rules (Dpress 0.94.0; plain before)
+        'js'    => 'javascript',
+        'json'  => 'json',
+        'ini'   => 'ini',
+        'xml'   => 'xml',
         'txt'   => 'text',
     ];
 

@@ -5,8 +5,8 @@ stylesheets, edited in the admin, under **Theme files**.
 
 - **The code editor** Dpress's markdown and CSS fields use - colours, line numbers, wrap, full size,
   Tab, Enter keeping the indent - with the HTML grammar for `.phtml`/`.php`/`.html` (PHP inside it
-  coloured as PHP), CSS for `.css` and Markdown for `.md`. `.js`, `.json`, `.ini` and `.txt` open
-  as plain text.
+  coloured as PHP), CSS for `.css` and Markdown for `.md` - Dpress's own grammars - and
+  EnlighterJS's rules for `.js`, `.json`, `.ini` and `.xml` (Dpress 0.94.0). `.txt` is plain.
 - **A template that does not parse is not saved.** PHP parses the text first - the parser
   `php -l` uses, in the same process - and a syntax error is a message on the field with its line,
   instead of a 500 on every page that uses the template.
@@ -17,7 +17,7 @@ stylesheets, edited in the admin, under **Theme files**.
   says a save has no history.
 - **A saved template runs on the next request**, even where OPcache does not check file times.
 
-Needs **Dpress 0.93.0** or later (`Dynart\Dpress\Repository`, and the HTML grammar from 0.92.0).
+Needs **Dpress 0.93.0** or later (`Dynart\Dpress\Repository`, and the HTML grammar from 0.92.0); with 0.94.0 the `.js`, `.json`, `.ini` and `.xml` files are coloured too.
 
 ## Why a plugin, and who may use it
 
